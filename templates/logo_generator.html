@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Generator</title>
+    <script>
+        function generateLogo() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/generate_logo", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("logoImage").src = response.image_url;
+                    document.getElementById("logoImage").style.display = "block";
+                }
+            };
+
+            var logoDescription = document.getElementById("logo_description").value;
+            xhr.send("logo_description=" + encodeURIComponent(logoDescription));
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to the Logo Generator</h1>
+    <input type="text" id="logo_description" placeholder="Describe your desired logo">
+    <button onclick="generateLogo()">Generate Logo</button>
+
+    <img id="logoImage" style="display:none; margin-top:20px;" alt="Generated Logo">
+</body>
+</html>

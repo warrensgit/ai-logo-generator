@@ -10,7 +10,7 @@ client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('logo_generator.html')
 
 @app.route('/generate_logo', methods=['POST'])
 def generate_logo():
@@ -25,9 +25,9 @@ def generate_logo():
             n=1,
         )
         image_url = response.data[0].url
-        return render_template('show_logo.html', image_url=image_url)
+        return jsonify({'image_url': image_url})
     except Exception as e:
-        return f"An error occurred: {e}"
+        return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81)
