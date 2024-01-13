@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from openai import OpenAI
 import os
 
@@ -25,6 +25,7 @@ def generate_logo():
             n=1,
         )
         image_url = response.data[0].url
+        print("Image URL:", image_url)  # Log the URL
         return jsonify({'image_url': image_url})
     except Exception as e:
         return jsonify({'error': str(e)})
