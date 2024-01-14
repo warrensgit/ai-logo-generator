@@ -18,17 +18,21 @@ def generate_logo():
 
     try:
         response = client.images.generate(
-            model="dall-e-3",
+            model="dall-e-2",
             prompt=user_input,
             size="1024x1024",
             quality="standard",
             n=1,
         )
+        print("Raw OpenAI API Response:", response)  # Log the raw response
+        # Assuming the response structure is as expected
         image_url = response.data[0].url
-        print("Image URL:", image_url)  # Log the URL
         return jsonify({'image_url': image_url})
     except Exception as e:
+        print("Error:", e)  # Log any errors
         return jsonify({'error': str(e)})
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81)
