@@ -15,11 +15,12 @@ def index():
 @app.route('/generate_logo', methods=['POST'])
 def generate_logo():
     user_input = request.form['logo_description']
+    logo_prompt = f"Create a logo that {user_input}"
 
     try:
         response = client.images.generate(
             model="dall-e-2",
-            prompt=user_input,
+            prompt=logo_prompt,
             size="1024x1024",
             quality="standard",
             n=1,
@@ -32,8 +33,5 @@ def generate_logo():
         print("Error:", e)  # Log any errors
         return jsonify({'error': str(e)})
 
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=81)
-
